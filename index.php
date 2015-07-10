@@ -1,6 +1,6 @@
 <?php
 /*
-* 2014 PrestaEdit
+* 2015 PrestaEdit
 *
 *  @author PrestaEdit <j.danse@prestaedit.com>
 *  @license	http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
