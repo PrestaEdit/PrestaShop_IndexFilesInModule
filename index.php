@@ -49,11 +49,15 @@ try {
             for ($i = 0; $i < $zip->numFiles; $i++) {
                 $stats = $zip->statIndex($i);
                 if (!$stats['size'] > 0) {
-                    $filename = $zip->getNameIndex($i).'index.php';
-                    if ($zip->locateName($filename) === false) {
-                        $zip->addFromString($filename, Tools::getDefaultIndexContent());
-                        $nb_files_added++;
+                    $filename = $zip->getNameIndex($i);
+                    $ext = substr(strrchr($filename, '.'), 1);
+                    if ($ext == false) {
+                        $filename .= 'index.php';
+                        if ($zip->locateName($filename) === false) {
+                            $zip->addFromString($filename, Tools::getDefaultIndexContent());
+                            $nb_files_added++;
                             $files_added[] = $filename;
+                        }
                     }
                 }
             }
