@@ -17,6 +17,7 @@ try {
     $uniqid = false;
     $zip_name = '';
     $nb_files_added = 0;
+    $files_added = array();
 
     if (Tools::isSubmit('checkZip')) {
         // Save document on disk
@@ -52,6 +53,7 @@ try {
                     if ($zip->locateName($filename) === false) {
                         $zip->addFromString($filename, Tools::getDefaultIndexContent());
                         $nb_files_added++;
+                            $files_added[] = $filename;
                     }
                 }
             }
@@ -59,7 +61,13 @@ try {
             // Close
             $zip->close();
 
-            echo $nb_files_added.' index added. <a href="download.php?uniqid='.$uniqid.'&filename='.$zip_name.'" target="_blank">[download]</a> - <a href="index.php?deleteZip=1&uniqid='.$uniqid.'">[delete]</a><br /><br />------<br /><br />';
+            echo $nb_files_added.' index added. <br />';
+            echo '<ul>';
+            foreach ($files_added as $file_added) {
+                echo '<li>'.$file_added.'</li>';
+            }
+            echo '</ul>';
+            echo '<a href="download.php?uniqid='.$uniqid.'&filename='.$zip_name.'" target="_blank">[download]</a> - <a href="index.php?deleteZip=1&uniqid='.$uniqid.'">[delete]</a><br /><br />------<br /><br />';
         } else {
             throw new ApplicationException('Error. '.Zip::displayError((int)$result_code));
         }
